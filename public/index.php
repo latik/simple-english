@@ -16,25 +16,25 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), ['locale_fallbac
 
 $app['debug'] = getenv('APP_DEBUG') ? : false;
 
-$googleWorksheetConfig = [
-    'privateKeyPath' => dirname(__DIR__) . getenv('APP_KEY');
-    'serviceAccountName' => getenv('SERVICE_ACCOUNT');
-    'app_key' => getenv('APP_KEY');
-    'googleApplicationName' => getenv('GOOGLE_APP');
-    'spreadsheetTitle' => getenv('SPREADSHEET_TITLE');
-    'worksheetTitle' => getenv('WORKSHEET_TITLE');
+$app['googleWorksheetConfig'] = [
+    'privateKeyPath' => dirname(__DIR__) . '/data/' . getenv('APP_KEY'),
+    'serviceAccountName' => getenv('SERVICE_ACCOUNT'),
+    'app_key' => getenv('APP_KEY'),
+    'googleApplicationName' => getenv('GOOGLE_APP'),
+    'spreadsheetTitle' => getenv('SPREADSHEET_TITLE'),
+    'worksheetTitle' => getenv('WORKSHEET_TITLE')
 ];
 
 //----------------------------------
 //
 $app->get('/listByCategory', function () use ($app) {
-    $worksheet = new Worksheet($googleWorksheetConfig);
+    $worksheet = new Worksheet($app['googleWorksheetConfig']);
     return $app['twig']->render('index.twig', ['scroll' => $worksheet->scroll()]);
 });
 
 //
 $app->get('/', function () use ($app) {
-    $worksheet = new Worksheet($googleWorksheetConfig);
+    $worksheet = new Worksheet($app['googleWorksheetConfig']);
     return $app['twig']->render('index.twig', ['worksheet' => $worksheet->orderByCategory()]);
 });
 
@@ -52,7 +52,7 @@ $app->match('/form', function (Request $request) use ($app) {
     if ($form->isValid()) {
         $post = $form->getData();
         try {
-            $worksheet = new Worksheet($app['privateKeyPath']);
+            $worksheet = new Worksheet($app['googleWorksheetConfig']);
             $worksheet->cellFeed->editCell(1,4, "time");
             $i=1;
             foreach (array_keys($post) as $key) {
