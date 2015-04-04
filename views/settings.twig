@@ -1,0 +1,145 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Speech Synthesis settings</h4>
+        </div>
+        <div class="modal-body">
+          <p id="msg"></p>
+          <input type="text" name="speech-msg" id="speech-msg" x-webkit-speech>
+              <div class="option">
+                <label for="lang">Lang</label>
+                <select name="lang" id="lang">
+                    <option>en-US</option>
+                    <option>ru-RU</option>
+                </select>
+            </div>
+            <div class="option">
+                <label for="voice">Voice</label>
+                <select name="voice" id="voice"></select>
+            </div>
+            <div class="option">
+                <label for="volume">Volume</label>
+                <input type="range" min="0" max="1" step="0.1" name="volume" id="volume" value="1">
+            </div>
+            <div class="option">
+                <label for="rate">Rate</label>
+                <input type="range" min="0.1" max="10" step="0.1" name="rate" id="rate" value="1">
+            </div>
+            <div class="option">
+                <label for="pitch">Pitch</label>
+                <input type="range" min="0" max="2" step="0.1" name="pitch" id="pitch" value="1">
+            </div>
+            <button id="speak">Speak</button>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <input id="save" type="submit" name="submit" class="btn btn-primary" value="Save changes">
+        </div>
+    </div>
+</div>
+<script>
+/*
+ * Check for browser support
+ */
+var supportMsg = document.getElementById('msg');
+
+if ('speechSynthesis' in window) {
+    supportMsg.innerHTML = 'Your browser <strong>supports</strong> speech synthesis.';
+} else {
+    supportMsg.innerHTML = 'Sorry your browser <strong>does not support</strong> speech synthesis.<br>Try this in <a href="http://www.google.co.uk/intl/en/chrome/browser/canary.html">Chrome Canary</a>.';
+    supportMsg.classList.add('not-supported');
+}
+
+// Get the 'lang' button
+var langSelect = document.getElementById('lang');
+
+// Get the 'speak' button
+var button = document.getElementById('speak');
+
+// Get the text input element.
+var speechMsgInput = document.getElementById('speech-msg');
+
+// Get the voice select element.
+var voiceSelect = document.getElementById('voice');
+
+// Get the attribute controls.
+var volumeInput = document.getElementById('volume');
+var rateInput = document.getElementById('rate');
+var pitchInput = document.getElementById('pitch');
+
+
+// Fetch the list of voices and populate the voice options.
+function loadVoices() {
+  // Fetch the available voices.
+    var voices = speechSynthesis.getVoices();
+
+  // Loop through each of the voices.
+    voices.forEach(function(voice, i) {
+    // Create a new option element.
+        var option = document.createElement('option');
+
+    // Set the options value and text.
+        option.value = voice.name;
+        option.innerHTML = voice.name;
+
+    // Add the option to the voice selector.
+        voiceSelect.appendChild(option);
+    });
+}
+
+// Execute loadVoices.
+loadVoices();
+
+// Chrome loads voices asynchronously.
+window.speechSynthesis.onvoiceschanged = function(e) {
+  loadVoices();
+};
+
+
+// Create a new utterance for the specified text and add it to
+// the queue.
+function speak(text) {
+  // Create a new instance of SpeechSynthesisUtterance.
+    var msg = new SpeechSynthesisUtterance();
+
+  // Set the text.
+    msg.text = text;
+
+   // Set the lang.
+    msg.lang = langSelect.value;
+
+  // Set the attributes.
+    msg.volume = parseFloat(volumeInput.value);
+    msg.rate = parseFloat(rateInput.value);
+    msg.pitch = parseFloat(pitchInput.value);
+
+  // If a voice has been selected, find the voice and set the
+  // utterance instance's voice attribute.
+    if (voiceSelect.value) {
+        msg.voice = speechSynthesis.getVoices().filter(function(voice) { return voice.name == voiceSelect.value; })[0];
+    }
+
+  console.log(msg);
+  // Queue this utterance.
+    window.speechSynthesis.speak(msg);
+}
+
+
+// Set up an event listener for when the 'speak' button is clicked.
+button.addEventListener('click', function(e) {
+    if (speechMsgInput.value.length > 0) {
+        speak(speechMsgInput.value);
+    }
+});
+
+// Set up an event listener for when the 'save' button is clicked.
+document.getElementById('save').addEventListener('click', function(e) {
+     localStorage["volume"] = parseFloat(volumeInput.value);
+     localStorage["rate"] = parseFloat(rateInput.value);
+     localStorage["pitch"] = parseFloat(pitchInput.value);
+     console.log(localStorage);
+});
+</script>

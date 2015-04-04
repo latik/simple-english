@@ -1,0 +1,28 @@
+{
+    "name": "latik/eng-words",
+    "description": "Work with Google API",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Latik",
+            "email": "latik@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "google/apiclient": "~1.1",
+        "asimlqt/php-google-spreadsheet-client": "~2.3",
+        "nesbot/carbon": "~1.18",
+        "silex/silex": "~1.2",
+        "symfony/form": "~2.6",
+        "symfony/security-csrf": "~2.6",
+        "twig/twig": "~1.18",
+        "symfony/twig-bridge": "~2.6",
+        "vlucas/phpdotenv": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Latik\\": "app/Latik/"
+        }
+	}
+}
