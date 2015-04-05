@@ -8,63 +8,9 @@
 <div id="mySettings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
 <hr>
 
-{% if worksheet is defined %}
-   {% for cat,cells in worksheet %}
-        <ul><span style='font-weight:bold'>{{ cat }}:</span>
-        {% for cell in cells %}
-            <li><span class='word'>{{ cell["english"] }}</span> - {{ cell["russian"] }}</li>
-        {% endfor %}
-        </ul>
-    {% endfor %}
-{% elseif scroll is defined %}
-    {% for cells in scroll %}
-        {% for cell in cells %}
-            <li>{{ cell }}</li>
-        {% endfor %}
-    {% endfor %}
-{% else %}
-    <p>No Words
-{% endif %}
 
 {% endblock %}
 
 {% block scripts %}
-<script>
-$('#myModal').on('show.bs.modal', function (event) {
-    var modal = $(this)
-    $.ajax({
-        url: "/form",
-        success: function(data) {
-            modal.empty()
-            modal.append(data)
-        }
-    })
-})
-$('#mySettings').on('show.bs.modal', function (event) {
-    var modal = $(this)
-    $.ajax({
-        url: "/settings",
-        success: function(data) {
-            modal.empty()
-            modal.append(data)
-        }
-    })
-})
-$(document).on('click','.word',function(){
-    var text = $.trim($(this).text());
-    if (text == '') return false;
-    var msg = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.onvoiceschanged = function(e) {
-        var voices = speechSynthesis.getVoices();
-        msg.voice = voices.filter(function(voice) { return voice.name == 'native';})[0];
-        msg.volume = localStorage["volume"];
-        msg.rate   = localStorage["rate"];
-        msg.pitch  = localStorage["pitch"];
-        console.log(voice);
-    };
-    console.log(msg);
-    window.speechSynthesis.speak(msg);
-    return false;
-});
-</script>
+<script src="/js/main.js"></script>
 {% endblock %}
