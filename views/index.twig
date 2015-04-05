@@ -1,14 +1,19 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new word</button>
+<button id="show-list" class="btn btn-primary">List words by category</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add new word <i class="fa fa-plus"></i></button>
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mySettings">Settings</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mySettings">Settings <i class="fa fa-sliders"></i></button>
 <div id="mySettings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
 <hr>
 
 
+<div id="show-pair"></div>
+<div id="pair" class="btn btn-primary">GO!</div>
+<div id="rand" class="btn btn-primary">Random</div>
+
+<div id="listWords"</div>
 {% endblock %}
 
 {% block scripts %}
