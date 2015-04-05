@@ -2,7 +2,10 @@ $(document).ready(function(){
     item = 0
     $.getJSON("/list", function(data) {
       items = data
+      $('#pair').removeAttr("disabled")
+      $('#rand').removeAttr("disabled")
     })
+
 })
 $('#pair').click(function(){
     ShowAndSpeak(item++)
