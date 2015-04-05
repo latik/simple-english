@@ -27,15 +27,19 @@ $app['googleWorksheetConfig'] = [
 
 //----------------------------------
 //
-$app->get('/listByCategory', function () use ($app) {
-    $worksheet = new Worksheet($app['googleWorksheetConfig']);
-    return $app['twig']->render('index.twig', ['scroll' => $worksheet->scroll()]);
+//
+$app->get('/', function () use ($app) {
+    return $app['twig']->render('index.twig');
+});
+
+$app->get('/list', function () use ($app) {
+    return $app->json((new Worksheet($app['googleWorksheetConfig']))->all());
 });
 
 //
-$app->get('/', function () use ($app) {
-    $worksheet = new Worksheet($app['googleWorksheetConfig']);
-    return $app['twig']->render('index.twig', ['worksheet' => $worksheet->orderByCategory()]);
+$app->get('/listByCategory', function () use ($app) {
+    $worksheet = (new Worksheet($app['googleWorksheetConfig']))->orderByCategory();
+    return $app['twig']->render('lists.twig', ['worksheet' => $worksheet]);
 });
 
 //

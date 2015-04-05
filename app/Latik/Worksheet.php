@@ -56,7 +56,7 @@ class Worksheet
         return $data;
     }
 
-    public function scroll()
+    public function all()
     {
         return array_map(function ($entry) {return $entry->getValues();}, $this->listFeed->getEntries());
     }
