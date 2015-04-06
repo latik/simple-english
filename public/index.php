@@ -37,6 +37,11 @@ $app->get('/list', function () use ($app) {
 });
 
 //
+$app->get('/categories', function () use ($app) {
+    return $app->json((new Worksheet($app['googleWorksheetConfig']))->categories());
+});
+
+//
 $app->get('/listByCategory', function () use ($app) {
     $worksheet = (new Worksheet($app['googleWorksheetConfig']))->orderByCategory();
     return $app['twig']->render('lists.twig', ['worksheet' => $worksheet]);

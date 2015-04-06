@@ -56,6 +56,11 @@ class Worksheet
         return $data;
     }
 
+    public function categories()
+    {
+        return array_keys($this->orderByCategory());
+    }
+
     public function all()
     {
         return array_map(function ($entry) {return $entry->getValues();}, $this->listFeed->getEntries());
