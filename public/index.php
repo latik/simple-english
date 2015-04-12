@@ -2,20 +2,21 @@
 require_once dirname(__DIR__) .'/vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Silex\Provider\FormServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\TranslationServiceProvider;
 use Latik\Worksheet;
 
 $app = new Silex\Application();
 
 $app->register(new FormServiceProvider());
-$app->register(new Silex\Provider\TwigServiceProvider(), [
+$app->register(new TwigServiceProvider(), [
     'twig.path' => dirname(__DIR__).'/views',
     'twig.form.templates' => [
         'bootstrap_3_horizontal_layout.html.twig',
     ],
 ]);
-$app->register(new Silex\Provider\TranslationServiceProvider(), ['locale_fallbacks' => array('en')]);
+$app->register(new TranslationServiceProvider(), ['locale_fallbacks' => array('en')]);
 
 \Dotenv::load(dirname(__DIR__));
 
