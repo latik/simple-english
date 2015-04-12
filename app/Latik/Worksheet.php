@@ -65,4 +65,14 @@ class Worksheet
     {
         return array_map(function ($entry) {return $entry->getValues();}, $this->listFeed->getEntries());
     }
+
+    public function editCell($x, $y, $value)
+    {
+        return $this->cellFeed->editCell($x, $y, $value);
+    }
+
+    public function insertRow(array $row)
+    {
+        return $this->listFeed->insert($row);
+    }
 }

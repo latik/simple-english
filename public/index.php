@@ -70,15 +70,15 @@ $app->match('/form', function (Request $request) use ($app) {
     if ($form->isValid()) {
         $post = $form->getData();
         try {
-            $worksheet = new Worksheet($app['googleWorksheetConfig']);
-            $worksheet->cellFeed->editCell(1,4, "time");
-            $i=1;
+            $worksheet = $app['google_worksheet'];
+            $worksheet->editCell(1, 4, 'time');
+            $i = 1;
             foreach (array_keys($post) as $key) {
-                $cellFeed->editCell(1,$i, $key);
+                $worksheet->editCell(1, $i, $key);
                 $i++;
             }
-            $row = array_merge($post,['time'=>\Carbon\Carbon::now()]);
-            $worksheet->listFeed->insert($row);
+            $row = array_merge($post, ['time' => \Carbon\Carbon::now()]);
+            $worksheet->insertRow($row);
 
             return $app->redirect('/');
         } catch (Exception $e){
