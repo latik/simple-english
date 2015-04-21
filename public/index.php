@@ -1,5 +1,6 @@
 <?php
-require_once dirname(__DIR__) .'/vendor/autoload.php';
+
+require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Provider\FormServiceProvider;
@@ -20,15 +21,15 @@ $app->register(new TranslationServiceProvider(), ['locale_fallbacks' => array('e
 
 \Dotenv::load(dirname(__DIR__));
 
-$app['debug'] = getenv('APP_DEBUG') ? : false;
+$app['debug'] = getenv('APP_DEBUG') ?: false;
 
 $app['googleWorksheetConfig'] = [
-    'privateKeyPath' => dirname(__DIR__) . '/data/' . getenv('APP_KEY'),
+    'privateKeyPath' => dirname(__DIR__).'/data/'.getenv('APP_KEY'),
     'serviceAccountName' => getenv('SERVICE_ACCOUNT'),
     'app_key' => getenv('APP_KEY'),
     'googleApplicationName' => getenv('GOOGLE_APP'),
     'spreadsheetTitle' => getenv('SPREADSHEET_TITLE'),
-    'worksheetTitle' => getenv('WORKSHEET_TITLE')
+    'worksheetTitle' => getenv('WORKSHEET_TITLE'),
 ];
 
 $app['google_worksheet'] = $app->share(function ($app) {
@@ -81,10 +82,11 @@ $app->match('/form', function (Request $request) use ($app) {
             $worksheet->insertRow($row);
 
             return $app->redirect('/');
-        } catch (Exception $e){
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
+
     return $app['twig']->render('form.twig', ['form' => $form->createView()]);
 });
 

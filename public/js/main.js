@@ -7,6 +7,7 @@ $(document).ready(function(){
     })
 
 })
+
 $('#pair').click(function(){
     ShowAndSpeak(item++)
 })
@@ -30,6 +31,22 @@ $('#myModal').on('show.bs.modal', function (event) {
         success: function(data) {
             modal.empty()
             modal.append(data)
+            $('#form_category').addClass("typeahead")
+            categories = []
+            $.getJSON("/categories")
+                .done(function(data) {
+                    categories = data
+                    $('#form_category').typeahead({
+                        hint: true,
+                        highlight: true,
+                        minLength: 1
+                      },
+                      {
+                        name: 'categories',
+                        displayKey: 'value',
+                        source: substringMatcher(categories)
+                    })
+                })
         }
     })
 })
@@ -48,7 +65,6 @@ $(document).on('click', '.word', function(){
     speak(text)
     return false
 });
-
 // Create a new utterance for the specified text and add it to the queue.
 function speak(text) {
     if (text == '') return false
@@ -58,10 +74,22 @@ function speak(text) {
     msg.rate   = localStorage["rate"]
     msg.lang   = localStorage["lang"]
     window.speechSynthesis.speak(msg)
-}
-
+};
 function ShowAndSpeak(i) {
     $('#show-pair').empty()
     $('#show-pair').html('<h3><span class="word">'+items[i].english+'</span> - '+items[i].russian + '</h3>')
     speak(items[i].english)
-}
+};
+var substringMatcher = function(strs) {
+  return function findMatches(q, cb) {
+    var matches, substrRegex;
+    matches = [];
+    substrRegex = new RegExp(q, 'i');
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        matches.push({ value: str })
+      }
+    });
+    cb(matches);
+  };
+};

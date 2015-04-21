@@ -1,6 +1,6 @@
 {% if worksheet is defined %}
    {% for cat,cells in worksheet %}
-        <ul><span style='font-weight:bold'>{{ cat }}:</span>
+        <ul class="list_word"><span style='font-weight:bold'>{{ cat }}:</span>
         {% for cell in cells %}
             <li><span class='word'>{{ cell["english"] }}</span> - {{ cell["russian"] }}</li>
         {% endfor %}

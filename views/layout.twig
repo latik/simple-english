@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         {% block head %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -11,10 +12,12 @@
         {% endblock %}
     </head>
     <body>
-        <div id="content">{% block content %}{% endblock %}</div>
-        <footer>{% block footer %}<p class="text-muted">&copy; Copyright 2015 by Latik.</p>{% endblock %}</footer>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        {% block scripts %}{% endblock %}
+        <div class="container-fluid">
+            <div id="content">{% block content %}{% endblock %}</div>
+            <footer>{% block footer %}<p class="text-muted navbar-fixed-bottom">&copy; Copyright 2015 by Latik.</p>{% endblock %}</footer>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+            {% block scripts %}{% endblock %}
+        </div>
     </body>
 </html>
