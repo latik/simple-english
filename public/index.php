@@ -63,6 +63,7 @@ $app->match('/form', function (Request $request) use ($app) {
         ->setAction('/form')
         ->add('english')
         ->add('russian')
+        ->add('image')
         ->add('category')
         ->getForm();
 

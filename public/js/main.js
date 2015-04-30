@@ -6,16 +6,42 @@ $(document).ready(function(){
       $('#rand').removeAttr("disabled")
     })
 
-})
+    // checkbox menu
+    $('#checkbox_menu_button_go').click(function () {
+        $(this).button('toggle');
+    });
+    $('#checkbox_menu_button_random ').click(function () {
+        $(this).button('toggle')
+    });
+    $('#checkbox_menu_button_category ').click(function () {
+        $(this).button('toggle')
+    });
 
+})
+$('#button_next').on('click', function(){
+    console.log ('clickonnext')
+    if ( $("#checkbox_menu_button_random").prop("checked") ) {
+          var randoms = Math.floor((Math.random() * items.length) + 1)
+          ShowAndSpeak(randoms)
+    }
+    if ( $("#checkbox_menu_button_go").prop("checked") ) {
+       ShowAndSpeak(item++)
+    }
+})
 $('#pair').click(function(){
+    $('#listWords').empty()
+    $('#button_next').show()
     ShowAndSpeak(item++)
 })
 $('#rand').click(function(){
+    $('#listWords').empty()
+    $('#button_next').show()
     var rand = Math.floor((Math.random() * items.length) + 1)
     ShowAndSpeak(rand)
 })
 $('#show-list').click(function(){
+    $('.container_words').empty()
+    $('#button_next').hide()
     $.ajax({
         url: "/listByCategory",
         success: function(data) {
@@ -31,7 +57,6 @@ $('#myModal').on('show.bs.modal', function (event) {
         success: function(data) {
             modal.empty()
             modal.append(data)
-            $('#form_category').addClass("typeahead")
             categories = []
             $.getJSON("/categories")
                 .done(function(data) {
@@ -61,12 +86,11 @@ $('#mySettings').on('show.bs.modal', function (event) {
     })
 })
 $(document).on('click', '.word', function(){
-    var text = $.trim($(this).text())
-    speak(text)
+    speak($(this).text())
     return false
-});
-// Create a new utterance for the specified text and add it to the queue.
+})
 function speak(text) {
+    text = $.trim(text)
     if (text == '') return false
     var msg = new SpeechSynthesisUtterance()
     msg.text = text
@@ -74,22 +98,22 @@ function speak(text) {
     msg.rate   = localStorage["rate"]
     msg.lang   = localStorage["lang"]
     window.speechSynthesis.speak(msg)
-};
+}
 function ShowAndSpeak(i) {
     $('#show-pair').empty()
-    $('#show-pair').html('<h3><span class="word">'+items[i].english+'</span> - '+items[i].russian + '</h3>')
+    $('#show-pair').html('<p><img src="'+items[i].image+'" alt="'+items[i].russian + '"></p> <p class="word words_eng">'+items[i].english+'</p> <p class="words_rus"> '+items[i].russian + '</p> <p class="words_transcription"> '+items[i].transcription + '</p>')
     speak(items[i].english)
-};
-var substringMatcher = function(strs) {
-  return function findMatches(q, cb) {
-    var matches, substrRegex;
-    matches = [];
-    substrRegex = new RegExp(q, 'i');
-    $.each(strs, function(i, str) {
-      if (substrRegex.test(str)) {
-        matches.push({ value: str })
-      }
-    });
-    cb(matches);
-  };
-};
+}
+function substringMatcher(strs) {
+    return function findMatches(q, cb) {
+        var matches, substrRegex;
+        matches = [];
+        substrRegex = new RegExp(q, 'i');
+        $.each(strs, function(i, str) {
+            if (substrRegex.test(str)) {
+                matches.push({ value: str });
+            }
+        });
+        cb(matches);
+    }
+}

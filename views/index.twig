@@ -1,19 +1,60 @@
 {% extends "layout.twig" %}
-
 {% block content %}
-<button id="show-list" class="btn btn-default">List words by category</button>
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add new word <i class="fa fa-plus"></i></button>
+   <header>
+        <nav class="navbar navbar-default header_nav">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="block_go_random btn-group" data-toggle="buttons">
+                    <label id="pair" class="btn btn-default btn-danger navbar-btn" disabled="disabled">
+                        <input type="radio" name="options" id="checkbox_menu_button_go" autocomplete="off" > Go <i class="fa fa-sort-amount-asc"></i>
+                    </label>
+                    <label id="rand" class="btn btn-default btn-warning navbar-btn"disabled="disabled">
+                        <input type="radio" name="options" id="checkbox_menu_button_random" autocomplete="off" > Random <i class="fa fa-refresh"></i>
+                    </label>
+                    <label class="btn btn-default btn-success navbar-btn">
+                        <input type="checkbox" autocomplete="off" class="checkbox_menu_button_category"> Category <i class="fa fa-list-ol"></i>
+                    </label>
+                </div>
+
+                <div class="header_menu_right navbar-right">
+                    <button  type="button" id="show-list" class="btn btn-default btn-info navbar-btn">List <i class="fa fa-list"></i></button>
+                    <button type="button" class="btn btn-default btn-info navbar-btn" data-toggle="modal" data-target="#myModal">Add <i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-default btn-info navbar-btn" data-toggle="modal" data-target="#mySettings">Settings <i class="fa fa-sliders"></i></button>
+                </div>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </header>
+    <div class="container">
+        <div class="page">
+            <div class="bg_page">
+               <img src="images/bg_doska.png" alt="bg" class="bg_img_desktop">
+                <img src="images/bg_doska_mobile.jpg" alt="bg" class="bg_img_mobile">
+                <div class="block_words">
+                    <div class="container_words" id="show-pair">
+                        <p><img src="images/flowers.jpg" alt="flowers"></p>
+                        <p class="words_eng" ></p>
+                        <p class="words_rus">цветы</p>
+                        <p class="words_transcription">(флауэрс) </p>
+                    </div>
+                    <button type="button" class="btn btn-default btn-primary navbar-btn " id="button_next">Next <span class="glyphicon glyphicon-share-alt"></span></button>
+                    <div id="listWords"></div>
+                </div><!-- /.block_words-->
+            </div>
+        </div><!-- /.bg_page-->
+    </div><!-- /.container -->
+
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#mySettings">Settings <i class="fa fa-sliders"></i></button>
 <div id="mySettings" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
-<hr>
-<div class="block_go_random">
-	<div id="show-pair"></div>
-		<div id="pair" class="btn btn-primary" disabled="disabled">GO!</div>
-		<div id="rand" class="btn btn-primary" disabled="disabled">Random</div>
-	<div id="listWords"></div>
-</div>
+
 {% endblock %}
-{% block scripts %}
-<script src="/js/main.js"></script>
-{% endblock %}
+
+
