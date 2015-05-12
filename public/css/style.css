@@ -336,32 +336,38 @@ nav {
   width: auto;
   height: auto;
   z-index: 100;
+  padding-bottom: 2em;
+
 }
 
 .block_words img {
   width: auto;
-  height: 185px;
-  max-width: 15vw;
+  height: 15vmax;
   box-shadow: 0 8px 10px 5px rgba(0,0,0,0.4);
+  margin: 0 auto;
 }
+.block_img {
+    width: auto;
+    min-height: auto;
+  }
 
 .words_eng {
-  padding: 0.7em 0 0.3em;
-  font-size: 4vw;
+  padding: 0.7vw 0 0.3vw;
+  font-size: 3vw;
   letter-spacing: 2px;
   font-weight: bold;
 
 }
 
 .words_rus, .words_transcription {
-  padding: 0 0 0.5em;
+  padding: 0 0 0.5vw;
   color: #ffa;
-  font-size: 2.5vw;
+  font-size: 2vw;
   letter-spacing: 1px;
 }
 
 .words_transcription {
-  font-size: 1.5vw;
+  font-size: 1.2vw;
   color: #ccc;
 }
 
@@ -372,6 +378,13 @@ nav {
   padding: 0.5em 1em;
   font-size: 1.5em;
   text-transform: uppercase;
+}
+
+.block_words .button_start{
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 25%;
+  text-shadow: none;
 }
 
 .glyphicon-volume-down {

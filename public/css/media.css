@@ -1,79 +1,87 @@
 /*==========  Desktop First Method  ==========*/
 
 /* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
+@media only screen and (max-width : 1024px) {
 
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
-
+    .block_words #button_next {
+        font-size: 1em;
+    }
 }
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
-	.block_words #button_next {
-		font-size: 1em;
-	}
+
 }
 
 /* Extra Small Devices, Phones */
-@media only screen and (max-width : 480px) {
-	.bg_img_mobile {
-		visibility: visible;
-	}
+@media only screen and (max-width : 640px) {
+    .bg_img_mobile {
+        visibility: visible;
+    }
 
-	.bg_img_desktop {
-		visibility: hidden;
-		position: absolute;
-	}
+    .bg_img_desktop {
+        visibility: hidden;
+        position: absolute;
+    }
 
-	.block_words {
-		margin-top: 4.5em;
-		top: 20%;
-		left: 0%;
-		right: 0%;
-	}
+    .block_words {
+        margin-top: 6em;
+        top: 20%;
+        left: 0%;
+        right: 0%;
+        padding-bottom: 4em;
+    }
 
-	.block_words img {
-		width: 20vw;
-		height: auto;
-		box-shadow: 0 1px 3px 1px #222;
+    .block_img {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+    }
+    .block_words img {
+        max-width: 100%;
+        height: auto;
+        /*box-shadow: 0 1px 3px 1px #222;*/
 }
 
-	.words_eng {
-		padding: 0.7em 0 0.3em;
-		font-size: 6vw;
-		letter-spacing: 2px;
-		font-weight: bold;
-	}
-	
-	.words_rus, .words_transcription {
-		padding: 0;
-		color: #ffa;
-		font-size: 4vw;
-		letter-spacing: 1px;
-	}
-	
-	.words_transcription {
-		font-size: 3vw;
-		color: #ccc;
-	}
+    .words_eng {
+        padding: 0.5em 0 0.2em;
+        font-size: 4em;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
 
-	footer .text-muted {
-		margin-top: 1em;
-		font-size: 0.8em;
-	}
-	#listWords{
-  		width: 98%;
-	}
+    .words_rus, .words_transcription {
+        padding-bottom: 0.3em;
+        color: #ffa;
+        font-size: 2.5em;
+        letter-spacing: 1px;
+    }
+
+    .words_transcription {
+        font-size: 1.5em;
+        color: #ccc;
+    }
+
+    footer .text-muted {
+        margin-top: 1em;
+        font-size: 0.8em;
+    }
+    #listWords{
+          width: 97%;
+          max-height: 80vmax;
+    }
+    .block_words #button_next {
+        font-size: 1.7em;
+    }
 }
 
 /* Custom, iPhone Retina */
 @media only screen and (max-width : 320px) {
-	#listWords{
-  		max-height: 45vmax;
-	}
+
 }
 
 /*==========  Mobile First Method  ==========*/
@@ -90,7 +98,7 @@
 
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
-	
+
 }
 
 /* Medium Devices, Desktops */

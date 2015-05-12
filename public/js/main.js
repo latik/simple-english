@@ -4,6 +4,7 @@ $(document).ready(function(){
       items = data
       $('#pair').removeAttr("disabled")
       $('#rand').removeAttr("disabled")
+      $('.button_start').removeAttr("disabled")
     })
 
     // checkbox menu
@@ -19,7 +20,7 @@ $(document).ready(function(){
 
 })
 $('#button_next').on('click', function(){
-    console.log ('clickonnext')
+    ShowAndSpeak(item++)
     if ( $("#checkbox_menu_button_random").prop("checked") ) {
           var randoms = Math.floor((Math.random() * items.length) + 1)
           ShowAndSpeak(randoms)
@@ -28,18 +29,30 @@ $('#button_next').on('click', function(){
        ShowAndSpeak(item++)
     }
 })
+
+$('.button_start').click(function(){
+    ShowAndSpeak(item++)
+    $('#button_next').removeClass('hidden')
+    $('#button_next').show()
+    $('.button_start').addClass('hidden')
+})
+
 $('#pair').click(function(){
     $('#listWords').empty()
     $('#button_next').show()
     ShowAndSpeak(item++)
+    $('#button_next').removeClass('hidden')
 })
+
 $('#rand').click(function(){
     $('#listWords').empty()
     $('#button_next').show()
     var rand = Math.floor((Math.random() * items.length) + 1)
     ShowAndSpeak(rand)
+    $('#button_next').removeClass('hidden')
 })
 $('#show-list').click(function(){
+    $('.button_start').addClass('hidden')
     $('.container_words').empty()
     $('#button_next').hide()
     $.ajax({
@@ -101,7 +114,7 @@ function speak(text) {
 }
 function ShowAndSpeak(i) {
     $('#show-pair').empty()
-    $('#show-pair').html('<p><img src="'+items[i].image+'" alt="'+items[i].russian + '"></p> <p class="word words_eng">'+items[i].english+'</p> <p class="words_rus"> '+items[i].russian + '</p> <p class="words_transcription"> '+items[i].transcription + '</p>')
+    $('#show-pair').html('<p class="block_img"><img src="'+items[i].image+'" alt="'+items[i].russian + '"></p> <p class="word words_eng">'+items[i].english+'</p> <p class="words_rus"> '+items[i].russian + '</p> <p class="words_transcription"> '+items[i].transcription + '</p>')
     speak(items[i].english)
 }
 function substringMatcher(strs) {
