@@ -10,12 +10,15 @@ $(document).ready(function(){
     // checkbox menu
     $('#checkbox_menu_button_go').click(function () {
         $(this).button('toggle');
+        $('.button_start').addClass('hidden')
     });
     $('#checkbox_menu_button_random ').click(function () {
         $(this).button('toggle')
+        $('.button_start').addClass('hidden')
     });
     $('#checkbox_menu_button_category ').click(function () {
         $(this).button('toggle')
+        $('.button_start').addClass('hidden')
     });
 
 })
