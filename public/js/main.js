@@ -18,8 +18,9 @@ $(document).ready(function(){
         $(this).button('toggle')
     });
 
-    $(".block_words").fadeIn([2000, ]);
-    $(".block_words").fadeOut([2000, ]);
+    $(".container_words").fadeIn([2000, ]);
+    $(".block_img").fadeIn([5000, ]);
+    $(".block_img").fadeOut([5000, ]);
 })
 
 $('#button_next').on('click', function(){
