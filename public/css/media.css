@@ -21,6 +21,7 @@
 @media only screen and (max-width : 640px) {
     .bg_img_mobile {
         visibility: visible;
+        height: 100%;
     }
 
     .bg_img_desktop {
