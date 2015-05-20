@@ -23,6 +23,7 @@ $(document).ready(function(){
 
 })
 $('#button_next').on('click', function(){
+    $('.button_start').addClass('hidden')
     ShowAndSpeak(item++)
     if ( $("#checkbox_menu_button_random").prop("checked") ) {
           var randoms = Math.floor((Math.random() * items.length) + 1)
