@@ -18,8 +18,8 @@ $(document).ready(function(){
         $(this).button('toggle')
     });
 
-    $(".block_img").fadeIn([2000, ]);
-    $(".block_img").fadeOut([2000, ]);
+    $(".block_words").fadeIn([2000, ]);
+    $(".block_words").fadeOut([2000, ]);
 })
 
 $('#button_next').on('click', function(){
