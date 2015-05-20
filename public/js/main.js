@@ -10,18 +10,15 @@ $(document).ready(function(){
     // checkbox menu
     $('#checkbox_menu_button_go').click(function () {
         $(this).button('toggle');
-        $('.button_start').addClass('hidden')
     });
     $('#checkbox_menu_button_random ').click(function () {
         $(this).button('toggle')
-        $('.button_start').addClass('hidden')
     });
     $('#checkbox_menu_button_category ').click(function () {
         $(this).button('toggle')
-        $('.button_start').addClass('hidden')
     });
-
 })
+
 $('#button_next').on('click', function(){
     $('.button_start').addClass('hidden')
     ShowAndSpeak(item++)
@@ -46,6 +43,7 @@ $('#pair').click(function(){
     $('#button_next').show()
     ShowAndSpeak(item++)
     $('#button_next').removeClass('hidden')
+    $('.button_start').addClass('hidden')
 })
 
 $('#rand').click(function(){
@@ -54,6 +52,7 @@ $('#rand').click(function(){
     var rand = Math.floor((Math.random() * items.length) + 1)
     ShowAndSpeak(rand)
     $('#button_next').removeClass('hidden')
+    $('.button_start').addClass('hidden')
 })
 $('#show-list').click(function(){
     $('.button_start').addClass('hidden')
