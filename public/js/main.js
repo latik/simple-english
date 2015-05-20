@@ -17,6 +17,9 @@ $(document).ready(function(){
     $('#checkbox_menu_button_category ').click(function () {
         $(this).button('toggle')
     });
+
+    $(".block_img").fadeIn([2000, ]);
+    $(".block_img").fadeOut([2000, ]);
 })
 
 $('#button_next').on('click', function(){
