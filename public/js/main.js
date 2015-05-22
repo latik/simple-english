@@ -25,14 +25,13 @@ $(document).ready(function(){
 
 $('#button_next').on('click', function(){
     $('.button_start').addClass('hidden')
-    ShowAndSpeak(item++)
     if ( $("#checkbox_menu_button_random").prop("checked") ) {
           var randoms = Math.floor((Math.random() * items.length) + 1)
-          ShowAndSpeak(randoms)
-    }
-    if ( $("#checkbox_menu_button_go").prop("checked") ) {
+          ShowAndSpeak(randoms) } else if ( $("#checkbox_menu_button_go").prop("checked") ) {
        ShowAndSpeak(item++)
-    }
+    }else {
+            ShowAndSpeak(item++)
+          }
 })
 
 $('.button_start').click(function(){
@@ -43,20 +42,20 @@ $('.button_start').click(function(){
 })
 
 $('#pair').click(function(){
+    ShowAndSpeak(item++)
+    $('.button_start').addClass('hidden')
+    $('#button_next').removeClass('hidden')
     $('#listWords').empty()
     $('#button_next').show()
-    ShowAndSpeak(item++)
-    $('#button_next').removeClass('hidden')
-    $('.button_start').addClass('hidden')
 })
 
 $('#rand').click(function(){
-    $('#listWords').empty()
+    $('.button_start').addClass('hidden')
+    $('#button_next').removeClass('hidden')
     $('#button_next').show()
     var rand = Math.floor((Math.random() * items.length) + 1)
     ShowAndSpeak(rand)
-    $('#button_next').removeClass('hidden')
-    $('.button_start').addClass('hidden')
+    $('#listWords').empty()
 })
 $('#show-list').click(function(){
     $('.button_start').addClass('hidden')
