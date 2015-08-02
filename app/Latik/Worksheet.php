@@ -63,6 +63,7 @@ class Worksheet
 
     public function all()
     {
+        /** @var \Google\Spreadsheet\ListEntry $entry */
         return array_map(function ($entry) {return $entry->getValues();}, $this->listFeed->getEntries());
     }
 

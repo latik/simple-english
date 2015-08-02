@@ -85,7 +85,7 @@ $app->match('/form', function (Request $request) use ($app) {
 
             return $app->redirect('/');
         } catch (Exception $e) {
-            die($e->getMessage());
+            print($e->getMessage());
         }
     }
 

@@ -1,7 +1,7 @@
 {
     "name": "latik/eng-words",
     "description": "Work with Google API",
-    "license": "BSD",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Latik",
