@@ -1341,7 +1341,6 @@
 				element.className = newClasses.trim();
 			},
 		    _offset: function (obj) {
-				// TODO: Need to find a better solution to fix vertical sliders
 				if(this.options.orientation === "vertical") {
 					return {
                         left: obj.offsetLeft,
