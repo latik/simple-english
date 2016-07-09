@@ -119,13 +119,23 @@ function speak(text) {
     window.speechSynthesis.speak(msg)
 }
 function ShowAndSpeak(i) {
+    var block_img = $('<img src="' + items[i].image + '" alt="' + items[i].english + '">')
+    var words_eng = $('<p class="word words_eng">' + items[i].english + '</p>')
+    var words_rus = $('<p class="words_rus">' + items[i].russian + '</p>')
+    var words_transcription = $('<p class="words_transcription"> ' + items[i].transcription + '</p>')
+
     $('#show-pair').empty()
-    $('#show-pair').html('<p class="block_img">\
-    <img src="'+items[i].image+'" alt="'+items[i].russian + '" ></p> \
-    <p class="word words_eng">'+items[i].english+'</p> \
-    <p class="words_rus"> '+items[i].russian + '</p> \
-    <!--p class="words_transcription"> '+items[i].transcription + '</p -->')
+    $('#show-pair').append(block_img)
+    $('#show-pair').append(words_eng)
+
     speak(items[i].english)
+
+    setTimeout (function(){
+        $('#show-pair').append(words_rus)
+    }, 5000);
+
+    /*$('#show-pair').append(words_transcription)*/
+
 }
 function substringMatcher(strs) {
     return function findMatches(q, cb) {
