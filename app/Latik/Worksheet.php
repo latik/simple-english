@@ -3,9 +3,9 @@
 namespace Latik;
 
 use Google\Spreadsheet\DefaultServiceRequest;
+use Google\Spreadsheet\ListEntry;
 use Google\Spreadsheet\ServiceRequestFactory;
 use Google\Spreadsheet\SpreadsheetService;
-use Google\Spreadsheet\ListEntry;
 
 class Worksheet
 {
@@ -64,8 +64,10 @@ class Worksheet
 
     public function all()
     {
-        /** @var \Google\Spreadsheet\ListEntry $entry */
-        return array_map(function (ListEntry $entry) {return $entry->getValues();}, $this->listFeed->getEntries());
+        /* @var \Google\Spreadsheet\ListEntry $entry */
+        return array_map(function (ListEntry $entry) {
+            return $entry->getValues();
+        }, $this->listFeed->getEntries());
     }
 
     public function editCell($x, $y, $value)
