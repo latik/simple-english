@@ -6,7 +6,6 @@ use Latik\Worksheet;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
-use Symfony\Component\HttpFoundation\Request;
 
 $app = new Silex\Application();
 
@@ -39,62 +38,13 @@ $app['google_worksheet'] = $app->share(function ($app) {
 //----------------------------------
 //
 //
-$app->get('/', function () use ($app) {
-    return $app['twig']->render('index.twig');
-});
+$app->get('/', 'Latik\\DefaultController::index');
+$app->get('/list', 'Latik\\DefaultController::list');
+$app->get('/categories', 'Latik\\DefaultController::categories');
+$app->get('/listByCategory', 'Latik\\DefaultController::listByCategory');
+$app->get('/settings', 'Latik\\DefaultController::settings');
+$app->match('/form', 'Latik\\DefaultController::form');
 
-$app->get('/list', function () use ($app) {
-    return $app->json($app['google_worksheet']->all());
-});
-
-//
-$app->get('/categories', function () use ($app) {
-    return $app->json($app['google_worksheet']->categories());
-});
-
-//
-$app->get('/listByCategory', function () use ($app) {
-    return $app['twig']->render('lists.twig', ['worksheet' => $app['google_worksheet']->orderByCategory()]);
-});
-
-//
-$app->match('/form', function (Request $request) use ($app) {
-    $form = $app['form.factory']->createBuilder('form')
-        ->setAction('/form')
-        ->add('english')
-        ->add('russian')
-        ->add('category')
-        ->add('transcription')
-        ->add('image')
-        ->getForm();
-
-    $form->handleRequest($request);
-
-    if ($form->isValid()) {
-        $post = $form->getData();
-        try {
-            $worksheet = $app['google_worksheet'];
-            $worksheet->editCell(1, 4, 'time');
-            $i = 1;
-            foreach (array_keys($post) as $key) {
-                $worksheet->editCell(1, $i, $key);
-                $i++;
-            }
-            $row = array_merge($post, ['time' => \Carbon\Carbon::now()]);
-            $worksheet->insertRow($row);
-
-            return $app->redirect('/');
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-    }
-
-    return $app['twig']->render('form.twig', ['form' => $form->createView()]);
-});
-
-$app->get('/settings', function () use ($app) {
-    return $app['twig']->render('settings.twig');
-});
 //----------------------------------
 
 $app->run();
