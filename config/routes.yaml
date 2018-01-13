@@ -1,0 +1,32 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+index:
+    path: /
+    methods: [GET]
+    controller: 'App\Controller\DefaultController::index'
+
+list:
+    path: /list
+    methods: [GET]
+    controller: 'App\Controller\DefaultController::list'
+
+categories:
+    path: /categories
+    methods: [GET]
+    controller: 'App\Controller\DefaultController::categories'
+
+listByCategory:
+    path: /listByCategory
+    methods: [GET]
+    controller: 'App\Controller\DefaultController::listByCategory'
+
+settings:
+    path: /settings
+    methods: [GET]
+    controller: 'App\Controller\DefaultController::settings'
+
+form:
+    path: /form
+    controller: 'App\Controller\DefaultController::form'

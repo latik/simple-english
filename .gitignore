@@ -1,5 +1,7 @@
 /vendor
 /data
+/public/bundles/
+/var/
 composer.lock
 .env
 

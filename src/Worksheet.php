@@ -1,6 +1,6 @@
 <?php
 
-namespace Latik;
+namespace App;
 
 use Google\Spreadsheet\DefaultServiceRequest;
 use Google\Spreadsheet\ListEntry;
@@ -10,17 +10,20 @@ use Google\Spreadsheet\SpreadsheetService;
 class Worksheet
 {
     protected $scopes = [
-            'https://spreadsheets.google.com/feeds',
-            'https://www.googleapis.com/auth/drive',
-            ];
+      'https://spreadsheets.google.com/feeds',
+      'https://www.googleapis.com/auth/drive',
+    ];
     public $cellFeed;
     public $listFeed;
 
-    public function __construct($config)
-    {
-        extract($config);
-
-        $privateKey = file_get_contents($privateKeyPath, true);
+    public function __construct(
+      $privateKeyPath,
+      $googleApplicationName,
+      $serviceAccountName,
+      $spreadsheetTitle,
+      $worksheetTitle
+    ) {
+        $privateKey = file_get_contents(__DIR__.$privateKeyPath, true);
         $client = new \Google_Client();
         $client->setApplicationName($googleApplicationName);
         $client->setScopes($this->scopes);

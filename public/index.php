@@ -1,50 +1,39 @@
 <?php
 
-require_once dirname(__DIR__).'/vendor/autoload.php';
+use App\Kernel;
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\HttpFoundation\Request;
 
-use Latik\Worksheet;
-use Silex\Provider\FormServiceProvider;
-use Silex\Provider\TranslationServiceProvider;
-use Silex\Provider\TwigServiceProvider;
+require __DIR__.'/../vendor/autoload.php';
 
-$app = new Silex\Application();
+// The check is to ensure we don't use .env in production
+if (!isset($_SERVER['APP_ENV'])) {
+    if (!class_exists(Dotenv::class)) {
+        throw new \RuntimeException('APP_ENV environment variable is not defined. You need to define environment variables for configuration or add "symfony/dotenv" as a Composer dependency to load variables from a .env file.');
+    }
+    (new Dotenv())->load(__DIR__.'/../.env');
+}
 
-$app->register(new FormServiceProvider());
-$app->register(new TwigServiceProvider(), [
-    'twig.path'           => dirname(__DIR__).'/views',
-    'twig.form.templates' => [
-        'bootstrap_3_horizontal_layout.html.twig',
-    ],
-]);
-$app->register(new TranslationServiceProvider(), ['locale_fallbacks' => ['en']]);
+$env = $_SERVER['APP_ENV'] ?? 'dev';
+$debug = $_SERVER['APP_DEBUG'] ?? ('prod' !== $env);
 
-\Dotenv::load(dirname(__DIR__));
+if ($debug) {
+    umask(0000);
 
-$app['debug'] = getenv('APP_DEBUG') ?: false;
+    Debug::enable();
+}
 
-$app['googleWorksheetConfig'] = [
-    'privateKeyPath'        => dirname(__DIR__).'/data/'.getenv('APP_KEY'),
-    'serviceAccountName'    => getenv('SERVICE_ACCOUNT'),
-    'app_key'               => getenv('APP_KEY'),
-    'googleApplicationName' => getenv('GOOGLE_APP'),
-    'spreadsheetTitle'      => getenv('SPREADSHEET_TITLE'),
-    'worksheetTitle'        => getenv('WORKSHEET_TITLE'),
-];
+if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? false) {
+    Request::setTrustedProxies(explode(',', $trustedProxies), Request::HEADER_X_FORWARDED_ALL ^ Request::HEADER_X_FORWARDED_HOST);
+}
 
-$app['google_worksheet'] = $app->share(function ($app) {
-    return new Worksheet($app['googleWorksheetConfig']);
-});
+if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
+    Request::setTrustedHosts(explode(',', $trustedHosts));
+}
 
-//----------------------------------
-//
-//
-$app->get('/', 'Latik\\DefaultController::index');
-$app->get('/list', 'Latik\\DefaultController::list');
-$app->get('/categories', 'Latik\\DefaultController::categories');
-$app->get('/listByCategory', 'Latik\\DefaultController::listByCategory');
-$app->get('/settings', 'Latik\\DefaultController::settings');
-$app->match('/form', 'Latik\\DefaultController::form');
-
-//----------------------------------
-
-$app->run();
+$kernel = new Kernel($env, $debug);
+$request = Request::createFromGlobals();
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);
