@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Cake\Chronos\Chronos;
 use Google\Spreadsheet\DefaultServiceRequest;
 use Google\Spreadsheet\ListEntry;
 use Google\Spreadsheet\ServiceRequestFactory;
@@ -73,13 +74,24 @@ class Worksheet
         }, $this->listFeed->getEntries());
     }
 
-    public function editCell($x, $y, $value)
+    private function editCell($x, $y, $value)
     {
         return $this->cellFeed->editCell($x, $y, $value);
     }
 
-    public function insertRow(array $row)
+    private function insertRow(array $row): void
     {
-        return $this->listFeed->insert($row);
+        $this->listFeed->insert($row);
+    }
+
+    public function storeRow(array $post): void
+    {
+        $this->editCell(1, 4, 'time');
+        $i = 0;
+        foreach (array_keys($post) as $key) {
+            $this->editCell(1, $i++, $key);
+        }
+        $row = array_merge($post, ['time' => Chronos::now()]);
+        $this->insertRow($row);
     }
 }

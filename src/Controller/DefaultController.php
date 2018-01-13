@@ -49,16 +49,8 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post = $form->getData();
             try {
-                $worksheet->editCell(1, 4, 'time');
-                $i = 1;
-                foreach (array_keys($post) as $key) {
-                    $worksheet->editCell(1, $i, $key);
-                    $i++;
-                }
-                $row = array_merge($post, ['time' => \Carbon\Carbon::now()]);
-                $worksheet->insertRow($row);
+                $worksheet->storeRow($form->getData());
 
                 return $this->redirect('/');
             } catch (\Exception $e) {
